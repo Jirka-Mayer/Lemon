@@ -1,0 +1,9 @@
+.vs
+packages
+
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs

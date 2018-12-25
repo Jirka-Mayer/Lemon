@@ -34,8 +34,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExampleClassTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="LiteralParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

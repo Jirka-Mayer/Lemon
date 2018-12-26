@@ -10,6 +10,11 @@ namespace Lemon
     public class ParserFactory<TParser, TValue> where TParser : Parser<TValue>
     {
         /// <summary>
+        /// Parser processor delegate with specific TParser argument
+        /// </summary>
+        public delegate TValue SpecificParserProcessor(TParser parser);
+
+        /// <summary>
         /// The function that actually creates the parser
         /// </summary>
         private Func<TParser> creator;
@@ -17,7 +22,7 @@ namespace Lemon
         /// <summary>
         /// The parser processor to be attached after parser creation
         /// </summary>
-        private Parser<TValue>.ParserProcessor processor;
+        private SpecificParserProcessor processor;
 
         /// <summary>
         /// Creates new parser factory instance
@@ -33,7 +38,7 @@ namespace Lemon
         /// </summary>
         /// <param name="processor">The processor function</param>
         /// <returns>Itself to be chainable</returns>
-        public ParserFactory<TParser, TValue> Process(Parser<TValue>.ParserProcessor processor)
+        public ParserFactory<TParser, TValue> Process(SpecificParserProcessor processor)
         {
             this.processor = processor;
 
@@ -47,7 +52,8 @@ namespace Lemon
         {
             TParser parser = this.creator();
 
-            parser.Processor = this.processor;
+            // set the processor with a casting adapter lambda
+            parser.Processor = (Parser<TValue> p) => this.processor((TParser)p);
 
             return parser;
         }

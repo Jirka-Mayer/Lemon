@@ -39,6 +39,7 @@
     <Compile Include="ParsingException.cs" />
     <Compile Include="ParserAlreadyUsedException.cs" />
     <Compile Include="ParserStillPristineException.cs" />
+    <Compile Include="RegexParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,7 +27,8 @@ namespace Lemon
             for (int i = 0; i < literal.Length && from + i < input.Length; i++)
                 if (input[from + i] != literal[i])
                     return new ParsingException(
-                        $"Literal '{ literal }' not matching at input index { from + i }."
+                        $"Literal '{ literal }' not matching.",
+                        input, from + i, this
                     );
 
             this.MatchedLength = literal.Length;

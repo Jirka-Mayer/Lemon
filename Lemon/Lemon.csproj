@@ -34,12 +34,14 @@
     <Compile Include="P.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="ParserOfTValue.cs" />
-    <Compile Include="ParserFactory.cs" />
+    <Compile Include="ParserFactoryOfType.cs" />
     <Compile Include="LiteralParser.cs" />
     <Compile Include="ParsingException.cs" />
     <Compile Include="ParserAlreadyUsedException.cs" />
     <Compile Include="ParserStillPristineException.cs" />
     <Compile Include="RegexParser.cs" />
+    <Compile Include="ConcatParser.cs" />
+    <Compile Include="ParserFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,13 +15,6 @@ namespace Lemon
         /// </summary>
         public int Position { get; private set; }
 
-        /// <summary>
-        /// Stack of parser calls
-        /// </summary>
-        public IEnumerable<Parser> ParserStack {
-            get => parserStack;
-        }
-
         private Stack<Parser> parserStack = new Stack<Parser>();
 
         public ParsingException(string message, string input, int position, Parser parser) : base(message)
@@ -35,6 +28,11 @@ namespace Lemon
         public void PushParser(Parser parser)
         {
             parserStack.Push(parser);
+        }
+
+        public Parser[] GetParserStack()
+        {
+            return parserStack.ToArray();
         }
     }
 }

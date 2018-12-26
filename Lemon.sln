@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lemon", "Lemon\Lemon.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LemonTests", "LemonTests\LemonTests.csproj", "{47145368-BF9F-490B-9E31-6C12394CC489}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Convertor", "Convertor\Convertor.csproj", "{4070DD50-AA90-45A3-81AE-25297F840841}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConvertorTests", "ConvertorTests\ConvertorTests.csproj", "{2F08C925-DA31-432E-A149-4E900002CCCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +23,13 @@ Global
 		{47145368-BF9F-490B-9E31-6C12394CC489}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47145368-BF9F-490B-9E31-6C12394CC489}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47145368-BF9F-490B-9E31-6C12394CC489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4070DD50-AA90-45A3-81AE-25297F840841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4070DD50-AA90-45A3-81AE-25297F840841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4070DD50-AA90-45A3-81AE-25297F840841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4070DD50-AA90-45A3-81AE-25297F840841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F08C925-DA31-432E-A149-4E900002CCCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F08C925-DA31-432E-A149-4E900002CCCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F08C925-DA31-432E-A149-4E900002CCCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F08C925-DA31-432E-A149-4E900002CCCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

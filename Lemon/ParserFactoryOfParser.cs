@@ -7,7 +7,7 @@ namespace Lemon
     /// </summary>
     /// <typeparam name="TParser">Type of the parser returned</typeparam>
     /// <typeparam name="TValue">Return type of the parser</typeparam>
-    public class ParserFactory<TParser, TValue> : ParserFactory where TParser : Parser<TValue>
+    public class ParserFactory<TParser, TValue> : ParserFactory<TValue> where TParser : Parser<TValue>
     {
         /// <summary>
         /// Parser processor delegate with specific TParser argument
@@ -56,6 +56,14 @@ namespace Lemon
             parser.Processor = (Parser<TValue> p) => this.processor((TParser)p);
 
             return parser;
+        }
+
+        /// <summary>
+        /// Creates an abstract valued parser when the factory is abstract as well
+        /// </summary>
+        public override Parser<TValue> CreateAbstractValuedParser()
+        {
+            return this.CreateParser();
         }
 
         /// <summary>

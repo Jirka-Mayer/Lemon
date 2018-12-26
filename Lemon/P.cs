@@ -51,12 +51,27 @@ namespace Lemon
         /// <summary>
         /// Matches an array of parsers in succession
         /// </summary>
-        /// <param name="parsers">Array of sub-parsers</param>
+        /// <param name="parts">Array of sub-parsers</param>
         /// <typeparam name="TValue">Return type of the composite parser</typeparam>
-        public static ParserFactory<ConcatParser<TValue>, TValue> Concat<TValue>(params ParserFactory[] parsers)
+        public static ParserFactory<ConcatParser<TValue>, TValue> Concat<TValue>(params ParserFactory[] parts)
         {
             return new ParserFactory<ConcatParser<TValue>, TValue>(() => {
-                return new ConcatParser<TValue>(parsers);
+                return new ConcatParser<TValue>(parts);
+            });
+        }
+
+        /// <summary>
+        /// Matches any of the provided parsers
+        /// </summary>
+        /// <param name="parts">Array of sub-parsers</param>
+        /// <typeparam name="TValue">Return type of the composite parser</typeparam>
+        /// <returns></returns>
+        public static ParserFactory<AnyParser<TValue>, TValue> Any<TValue>(params ParserFactory<TValue>[] parts)
+        {
+            // Note: AnyParser has processor already attached
+            
+            return new ParserFactory<AnyParser<TValue>, TValue>(() => {
+                return new AnyParser<TValue>(parts);
             });
         }
     }

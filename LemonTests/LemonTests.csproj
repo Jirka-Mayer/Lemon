@@ -38,6 +38,7 @@
     <Compile Include="LiteralParserTest.cs" />
     <Compile Include="RegexParserTest.cs" />
     <Compile Include="ConcatParserTest.cs" />
+    <Compile Include="AnyParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

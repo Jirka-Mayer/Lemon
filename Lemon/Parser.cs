@@ -68,6 +68,12 @@ namespace Lemon
             this.givenInput = input;
             this.givenFromIndex = from;
 
+            if (from < 0)
+                throw new ArgumentOutOfRangeException(nameof(from), "Value has to be non negative.");
+
+            if (input == null)
+                throw new ArgumentNullException(nameof(input));
+
             this.Exception = this.PerformParsing(from, input);
         }
 
@@ -82,24 +88,14 @@ namespace Lemon
 
         /// <summary>
         /// Performs the actual parsing
-        /// Default implementation checks argument values
         /// 
-        /// Values to set:
+        /// Values required to set:
         /// - MatchedLength
         /// </summary>
         /// <param name="from">Input starting index</param>
         /// <param name="input">Input string</param>
         /// <returns>Null on success, ParsingException otherwise</returns>
-        protected virtual ParsingException PerformParsing(int from, string input)
-        {
-            if (from < 0)
-                throw new ArgumentOutOfRangeException(nameof(from), "Value has to be non negative.");
-
-            if (input == null)
-                throw new ArgumentNullException(nameof(input));
-
-            return null;
-        }
+        protected abstract ParsingException PerformParsing(int from, string input);
 
         /// <summary>
         /// Obtains the matched part of the input string

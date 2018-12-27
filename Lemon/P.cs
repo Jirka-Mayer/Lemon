@@ -49,6 +49,18 @@ namespace Lemon
         }
 
         /// <summary>
+        /// Matches a regular expression and returns the matched string
+        /// </summary>
+        /// <param name="pattern">Regex pattern</param>
+        /// <param name="options">Regex options</param>
+        public static ParserFactory<RegexParser<string>, string> StringRegex(
+            string pattern, RegexOptions options = RegexOptions.None
+        )
+        {
+            return Regex<string>(pattern, options).Process(p => p.GetMatchedString());
+        }
+
+        /// <summary>
         /// Matches an array of parsers in succession
         /// </summary>
         /// <param name="parts">Array of sub-parsers</param>
@@ -65,13 +77,28 @@ namespace Lemon
         /// </summary>
         /// <param name="parts">Array of sub-parsers</param>
         /// <typeparam name="TValue">Return type of the composite parser</typeparam>
-        /// <returns></returns>
         public static ParserFactory<AnyParser<TValue>, TValue> Any<TValue>(params ParserFactory<TValue>[] parts)
         {
             // Note: AnyParser has processor already attached
             
             return new ParserFactory<AnyParser<TValue>, TValue>(() => {
                 return new AnyParser<TValue>(parts);
+            });
+        }
+
+        /// <summary>
+        /// Matches a parser as many times as possible
+        /// </summary>
+        /// <param name="part">Parser to be repeated</param>
+        /// <param name="quantification">How many times to repeat</param>
+        /// <typeparam name="TValue">Return type of the whole composite parser</typeparam>
+        /// <typeparam name="TSubValue">Return type of the internal parser that's being repeated</typeparam>
+        public static ParserFactory<RepeatParser<TValue, TSubValue>, TValue> Repeat<TValue, TSubValue>(
+            ParserFactory<TSubValue> part, Quantification quantification
+        )
+        {
+            return new ParserFactory<RepeatParser<TValue, TSubValue>, TValue>(() => {
+                return new RepeatParser<TValue, TSubValue>(part, quantification);
             });
         }
     }

@@ -39,6 +39,7 @@
     <Compile Include="RegexParserTest.cs" />
     <Compile Include="ConcatParserTest.cs" />
     <Compile Include="AnyParserTest.cs" />
+    <Compile Include="RepeatParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

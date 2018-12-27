@@ -22,14 +22,22 @@ namespace Lemon
 
         protected override ParsingException PerformParsing(int from, string input)
         {
-            base.PerformParsing(from, input);
-
-            for (int i = 0; i < literal.Length && from + i < input.Length; i++)
-                if (input[from + i] != literal[i])
+            for (int i = 0; i < literal.Length; i++)
+            {
+                if (from + i >= input.Length)
                     return new ParsingException(
-                        $"Literal '{ literal }' not matching.",
+                        $"Literal '{ literal }' not matching." +
+                        $"Expected character '{ literal[i] }'. Instead reached end of input.",
                         input, from + i, this
                     );
+
+                if (input[from + i] != literal[i])
+                    return new ParsingException(
+                        $"Literal '{ literal }' not matching." +
+                        $"Expected character '{ literal[i] }'. Instead found '{ input[from + i] }'.",
+                        input, from + i, this
+                    );
+            }
 
             this.MatchedLength = literal.Length;
             return null;

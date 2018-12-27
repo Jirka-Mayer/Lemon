@@ -44,6 +44,7 @@
     <Compile Include="ParserFactory.cs" />
     <Compile Include="AnyParser.cs" />
     <Compile Include="ParserFactoryOfValue.cs" />
+    <Compile Include="RepeatParser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

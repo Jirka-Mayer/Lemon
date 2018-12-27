@@ -33,6 +33,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Json\JP.cs" />
+    <Compile Include="Json\JsonString.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

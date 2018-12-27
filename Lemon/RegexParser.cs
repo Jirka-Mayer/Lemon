@@ -32,8 +32,6 @@ namespace Lemon
 
         protected override ParsingException PerformParsing(int from, string input)
         {
-            base.PerformParsing(from, input);
-
             Regex regex = new Regex(pattern, options);
             this.match = regex.Match(input, from);
 

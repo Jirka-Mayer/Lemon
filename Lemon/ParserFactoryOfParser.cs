@@ -53,7 +53,9 @@ namespace Lemon
             TParser parser = this.creator();
 
             // set the processor with a casting adapter lambda
-            parser.Processor = (Parser<TValue> p) => this.processor((TParser)p);
+            // if a processor was given
+            if (this.processor != null)
+                parser.Processor = (Parser<TValue> p) => this.processor((TParser)p);
 
             return parser;
         }

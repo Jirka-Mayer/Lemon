@@ -12,9 +12,10 @@ namespace Convertor.Json
     {
         public static ParserFactory<JsonEntity> Entity()
         {
+            // use parser builders (not factories) to help prevent infinite recursion
             return P.AnyB<JsonEntity>(
-                () => P<JsonEntity, JsonObject>.Cast(JP.Object()),
-                () => P<JsonEntity, JsonString>.Cast(JP.String())
+                () => P.Cast<JsonEntity, JsonObject>(JP.Object()),
+                () => P.Cast<JsonEntity, JsonString>(JP.String())
             );
         }
 

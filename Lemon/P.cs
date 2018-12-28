@@ -158,11 +158,7 @@ namespace Lemon
                 return new RepeatParser<TValue, TSubValue>(builder(), quantification);
             });
         }
-    }
 
-    // TODO: extract a cast parser
-    public static class P<TTo, TFrom> where TFrom : TTo
-    {
         /// <summary>
         /// Allows value returned from a parser to be casted to a different type
         /// </summary>
@@ -170,13 +166,13 @@ namespace Lemon
         /// <typeparam name="TTo">Cast to</typeparam>
         /// <typeparam name="TFrom">Cast from</typeparam>
         /// <returns></returns>
-        public static ParserFactory<RepeatParser<TTo, TFrom>, TTo> Cast(
+        public static ParserFactory<CastParser<TTo, TFrom>, TTo> Cast<TTo, TFrom>(
             ParserFactory<TFrom> parser
-        )
+        ) where TFrom : TTo
         {
-            return new ParserFactory<RepeatParser<TTo, TFrom>, TTo>(() => {
-                return new RepeatParser<TTo, TFrom>(parser, Quantification.Exactly(1));
-            }).Process(p => (TTo)p.Matches[0].Value);
+            return new ParserFactory<CastParser<TTo, TFrom>, TTo>(() => {
+                return new CastParser<TTo, TFrom>(parser);
+            });
         }
     }
 }

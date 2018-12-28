@@ -12,13 +12,10 @@ namespace Convertor.Json
     {
         public static ParserFactory<JsonEntity> Entity()
         {
-            // TODO: this sucks, try to solve it!
-            return new ParserFactory<Parser<JsonEntity>, JsonEntity>(() => {
-                return new AnyParser<JsonEntity>(
-                    P<JsonEntity, JsonObject>.Cast(JP.Object()),
-                    P<JsonEntity, JsonString>.Cast(JP.String())
-                );
-            });
+            return P.AnyB<JsonEntity>(
+                () => P<JsonEntity, JsonObject>.Cast(JP.Object()),
+                () => P<JsonEntity, JsonString>.Cast(JP.String())
+            );
         }
 
         public static ParserFactory<JsonObject> Object()
@@ -44,17 +41,18 @@ namespace Convertor.Json
 
         private static ParserFactory<KeyValuePair<string, JsonEntity>> ObjectItem()
         {
-            return P.Concat<KeyValuePair<string, JsonEntity>>(
-                Whitespace(),
-                String(),
-                Whitespace(),
-                P.Literal(":"),
-                Whitespace(),
-                Entity(),
-                Whitespace(),
+            // prevent infinite recursion by passing builders instead of factories
+            return P.ConcatB<KeyValuePair<string, JsonEntity>>(
+                JP.Whitespace,
+                JP.String,
+                JP.Whitespace,
+                () => P.Literal(":"),
+                JP.Whitespace,
+                JP.Entity,
+                JP.Whitespace,
                 
                 // TODO: implement the optional parser and a P.Void struct for no return type
-                P.Repeat<P.Void, P.Void>(
+                () => P.Repeat<P.Void, P.Void>(
                     P.Concat<P.Void>(
                         P.Literal(","),
                         Whitespace()
@@ -62,7 +60,7 @@ namespace Convertor.Json
                     Quantification.QuestionMark
                 ),
 
-                Whitespace()
+                JP.Whitespace
             ).Process(p => {
                 return new KeyValuePair<string, JsonEntity>(
                     ((Parser<JsonString>)p.Parts[1]).Value.Value,
@@ -79,7 +77,7 @@ namespace Convertor.Json
                 P.Repeat<string, string>(
                     P.Any<string>(
                         P.StringRegex(@"[^\""\\]+"),
-                        EscapedStringCharacter()
+                        JP.EscapedStringCharacter()
                     ),
                     Quantification.Star
                 ).Process(p => System.String.Concat(p.Matches.Select(m => m.Value))),

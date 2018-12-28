@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Lemon
@@ -78,6 +79,23 @@ namespace Lemon
         }
 
         /// <summary>
+        /// Matches an array of parsers in succession
+        /// Takes parameter-less parser builders as the arguments
+        /// </summary>
+        /// <param name="builders">Array of sub-parser builders</param>
+        /// <typeparam name="TValue">Return type of the composite parser</typeparam>
+        public static ParserFactory<ConcatParser<TValue>, TValue> ConcatB<TValue>(
+            params Func<ParserFactory>[] builders
+        )
+        {
+            return new ParserFactory<ConcatParser<TValue>, TValue>(() => {
+                return new ConcatParser<TValue>(
+                    builders.Select(b => b()).ToArray()
+                );
+            });
+        }
+
+        /// <summary>
         /// Matches any of the provided parsers
         /// </summary>
         /// <param name="parts">Array of sub-parsers</param>
@@ -88,6 +106,23 @@ namespace Lemon
             
             return new ParserFactory<AnyParser<TValue>, TValue>(() => {
                 return new AnyParser<TValue>(parts);
+            });
+        }
+
+        /// <summary>
+        /// Matches any of the provided parsers
+        /// Takes parameter-less parser builders as the arguments
+        /// </summary>
+        /// <param name="builders">Array of sub-parser builders</param>
+        /// <typeparam name="TValue">Return type of the composite parser</typeparam>
+        public static ParserFactory<AnyParser<TValue>, TValue> AnyB<TValue>(
+            params Func<ParserFactory<TValue>>[] builders
+        )
+        {
+            return new ParserFactory<AnyParser<TValue>, TValue>(() => {
+                return new AnyParser<TValue>(
+                    builders.Select(b => b()).ToArray()
+                );
             });
         }
 
@@ -104,6 +139,23 @@ namespace Lemon
         {
             return new ParserFactory<RepeatParser<TValue, TSubValue>, TValue>(() => {
                 return new RepeatParser<TValue, TSubValue>(part, quantification);
+            });
+        }
+
+        /// <summary>
+        /// Matches a parser as many times as possible
+        /// Takes parameter-less parser builders as the arguments
+        /// </summary>
+        /// <param name="builder">Parser builder to be repeated</param>
+        /// <param name="quantification">How many times to repeat</param>
+        /// <typeparam name="TValue">Return type of the whole composite parser</typeparam>
+        /// <typeparam name="TSubValue">Return type of the internal parser that's being repeated</typeparam>
+        public static ParserFactory<RepeatParser<TValue, TSubValue>, TValue> RepeatB<TValue, TSubValue>(
+            Func<ParserFactory<TSubValue>> builder, Quantification quantification
+        )
+        {
+            return new ParserFactory<RepeatParser<TValue, TSubValue>, TValue>(() => {
+                return new RepeatParser<TValue, TSubValue>(builder(), quantification);
             });
         }
     }

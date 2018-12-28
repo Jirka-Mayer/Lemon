@@ -36,6 +36,8 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Json\StringParserTest.cs" />
+    <Compile Include="Json\ObjectParserTest.cs" />
+    <Compile Include="Json\StringifyTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

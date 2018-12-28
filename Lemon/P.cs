@@ -9,6 +9,11 @@ namespace Lemon
     public static class P
     {
         /// <summary>
+        /// Return type for parser for which we are not interested in the result it returns
+        /// </summary>
+        public struct Void {}
+
+        /// <summary>
         /// Matches a literal string and returns the string as the value
         /// </summary>
         /// <param name="literal">String to match</param>
@@ -100,6 +105,26 @@ namespace Lemon
             return new ParserFactory<RepeatParser<TValue, TSubValue>, TValue>(() => {
                 return new RepeatParser<TValue, TSubValue>(part, quantification);
             });
+        }
+    }
+
+    // TODO: extract a cast parser
+    public static class P<TTo, TFrom> where TFrom : TTo
+    {
+        /// <summary>
+        /// Allows value returned from a parser to be casted to a different type
+        /// </summary>
+        /// <param name="parser">Subject parser</param>
+        /// <typeparam name="TTo">Cast to</typeparam>
+        /// <typeparam name="TFrom">Cast from</typeparam>
+        /// <returns></returns>
+        public static ParserFactory<RepeatParser<TTo, TFrom>, TTo> Cast(
+            ParserFactory<TFrom> parser
+        )
+        {
+            return new ParserFactory<RepeatParser<TTo, TFrom>, TTo>(() => {
+                return new RepeatParser<TTo, TFrom>(parser, Quantification.Exactly(1));
+            }).Process(p => (TTo)p.Matches[0].Value);
         }
     }
 }

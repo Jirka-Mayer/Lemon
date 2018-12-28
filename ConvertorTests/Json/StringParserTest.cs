@@ -3,7 +3,7 @@ using System;
 using Convertor.Json;
 using Lemon;
 
-namespace ConvertorTests
+namespace ConvertorTests.Json
 {
     [TestFixture]
     public class StringParserTest

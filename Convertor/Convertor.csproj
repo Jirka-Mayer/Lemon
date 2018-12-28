@@ -35,6 +35,9 @@
     <Compile Include="Json\JP.cs" />
     <Compile Include="Json\JsonString.cs" />
     <Compile Include="Json\JsonParsingException.cs" />
+    <Compile Include="Json\JsonEntity.cs" />
+    <Compile Include="Json\JsonObject.cs" />
+    <Compile Include="Json\StringifyOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

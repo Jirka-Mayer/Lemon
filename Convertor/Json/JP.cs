@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 using Lemon;
 
 namespace Convertor.Json
@@ -9,6 +10,67 @@ namespace Convertor.Json
     /// </summary>
     public static class JP
     {
+        public static ParserFactory<JsonEntity> Entity()
+        {
+            // TODO: this sucks, try to solve it!
+            return new ParserFactory<Parser<JsonEntity>, JsonEntity>(() => {
+                return new AnyParser<JsonEntity>(
+                    P<JsonEntity, JsonObject>.Cast(JP.Object()),
+                    P<JsonEntity, JsonString>.Cast(JP.String())
+                );
+            });
+        }
+
+        public static ParserFactory<JsonObject> Object()
+        {
+            return P.Concat<JsonObject>(
+                P.Literal("{"),
+                Whitespace(),
+
+                P.Repeat<JsonObject, KeyValuePair<string, JsonEntity>>(
+                    ObjectItem(),
+                    Quantification.Star
+                ).Process(p => {
+                    var o = new JsonObject();
+                    foreach (Parser<KeyValuePair<string, JsonEntity>> i in p.Matches)
+                        o.Items.Add(i.Value.Key, i.Value.Value);
+                    return o;
+                }),
+
+                Whitespace(),
+                P.Literal("}")
+            ).Process(p => ((Parser<JsonObject>)p.Parts[2]).Value);
+        }
+
+        private static ParserFactory<KeyValuePair<string, JsonEntity>> ObjectItem()
+        {
+            return P.Concat<KeyValuePair<string, JsonEntity>>(
+                Whitespace(),
+                String(),
+                Whitespace(),
+                P.Literal(":"),
+                Whitespace(),
+                Entity(),
+                Whitespace(),
+                
+                // TODO: implement the optional parser and a P.Void struct for no return type
+                P.Repeat<P.Void, P.Void>(
+                    P.Concat<P.Void>(
+                        P.Literal(","),
+                        Whitespace()
+                    ),
+                    Quantification.QuestionMark
+                ),
+
+                Whitespace()
+            ).Process(p => {
+                return new KeyValuePair<string, JsonEntity>(
+                    ((Parser<JsonString>)p.Parts[1]).Value.Value,
+                    ((Parser<JsonEntity>)p.Parts[5]).Value
+                );
+            });
+        }
+
         public static ParserFactory<JsonString> String()
         {
             return P.Concat<JsonString>(
@@ -73,6 +135,11 @@ namespace Convertor.Json
                     $"Unknown escaped character '{ p.Value }'"
                 );
             });
+        }
+
+        public static ParserFactory<string> Whitespace()
+        {
+            return P.StringRegex(@"[ \t\n\r]*");
         }
     }
 }

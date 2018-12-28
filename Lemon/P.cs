@@ -160,6 +160,21 @@ namespace Lemon
         }
 
         /// <summary>
+        /// May match a parser and may not, succesful anyway
+        /// </summary>
+        /// <param name="parser">Parser factory of the inner parser</param>
+        /// <typeparam name="TValue">Return type of the inner parser and the whole parser</typeparam>
+        /// <returns></returns>
+        public static ParserFactory<OptionalParser<TValue>, TValue> Optional<TValue>(
+            ParserFactory<TValue> parser
+        )
+        {
+            return new ParserFactory<OptionalParser<TValue>, TValue>(() => {
+                return new OptionalParser<TValue>(parser);
+            });
+        }
+
+        /// <summary>
         /// Allows value returned from a parser to be casted to a different type
         /// </summary>
         /// <param name="parser">Subject parser</param>

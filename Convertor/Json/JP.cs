@@ -51,16 +51,12 @@ namespace Convertor.Json
                 JP.Whitespace,
                 JP.Entity,
                 JP.Whitespace,
-                
-                // TODO: implement the optional parser and a P.Void struct for no return type
-                () => P.Repeat<P.Void, P.Void>(
+                () => P.Optional<P.Void>(
                     P.Concat<P.Void>(
                         P.Literal(","),
                         Whitespace()
-                    ),
-                    Quantification.QuestionMark
+                    )
                 ),
-
                 JP.Whitespace
             ).Process(p => {
                 return new KeyValuePair<string, JsonEntity>(

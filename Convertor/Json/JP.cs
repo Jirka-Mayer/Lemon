@@ -15,7 +15,9 @@ namespace Convertor.Json
             // use parser builders (not factories) to help prevent infinite recursion
             return P.AnyB<JsonEntity>(
                 () => P.Cast<JsonEntity, JsonObject>(JP.Object()),
+                () => P.Cast<JsonEntity, JsonArray>(JP.Array()),
                 () => P.Cast<JsonEntity, JsonString>(JP.String()),
+                () => P.Cast<JsonEntity, JsonNumber>(JP.Number()),
                 () => P.Cast<JsonEntity, JsonNull>(JP.Null()),
                 () => P.Cast<JsonEntity, JsonBoolean>(JP.Boolean())
             );
@@ -66,6 +68,32 @@ namespace Convertor.Json
                     ((Parser<JsonEntity>)p.Parts[5]).Value
                 );
             });
+        }
+
+        public static ParserFactory<JsonArray> Array()
+        {
+            return P.Concat<JsonArray>(
+                P.Literal("["),
+                JP.Whitespace(),
+
+                P.Repeat<JsonArray, JsonEntity>(
+                    P.Concat<JsonEntity>(
+                        JP.Entity(),
+                        JP.Whitespace(),
+                        P.Optional<P.Void>(
+                            P.Literal<P.Void>(",")
+                        ),
+                        JP.Whitespace()
+                    ).Process(p => ((Parser<JsonEntity>)p.Parts[0]).Value),
+                    Quantification.Star
+                ).Process(p => {
+                    var a = new JsonArray();
+                    a.Items.AddRange(p.Matches.Select(m => m.Value));
+                    return a;
+                }),
+
+                P.Literal("]")
+            ).Process(p => ((Parser<JsonArray>)p.Parts[2]).Value);
         }
 
         public static ParserFactory<JsonString> String()

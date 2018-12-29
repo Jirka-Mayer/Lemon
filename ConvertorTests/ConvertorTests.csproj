@@ -39,6 +39,7 @@
     <Compile Include="Json\ObjectParserTest.cs" />
     <Compile Include="Json\StringifyTest.cs" />
     <Compile Include="Json\NumberParserTest.cs" />
+    <Compile Include="Json\ArrayParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

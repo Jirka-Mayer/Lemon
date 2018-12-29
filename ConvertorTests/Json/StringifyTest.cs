@@ -51,6 +51,44 @@ namespace ConvertorTests.Json
                     indentCharacter = "\t"
                 })
             );
+
+            Assert.AreEqual(
+                "{}",
+                new JsonObject().Stringify()
+            );
+
+            Assert.AreEqual(
+                "{\n}",
+                new JsonObject().Stringify(new StringifyOptions() {
+                    indentSize = 2,
+                    currentIndent = 0,
+                    indentCharacter = " "
+                })
+            );
+        }
+
+        [TestCase]
+        public void ItSerializesArrays()
+        {
+            var a = new JsonArray();
+            a.Items.Add(new JsonNull());
+            a.Items.Add(new JsonNumber(42));
+            a.Items.Add(new JsonObject());
+            a.Items.Add(new JsonBoolean(false));
+
+            Assert.AreEqual(
+                "[null, 42, {}, false]",
+                a.Stringify(new StringifyOptions())
+            );
+
+            Assert.AreEqual(
+                "[\n  null,\n  42,\n  {\n  },\n  false\n]",
+                a.Stringify(new StringifyOptions() {
+                    indentSize = 2,
+                    currentIndent = 0,
+                    indentCharacter = " "
+                })
+            );
         }
     }
 }

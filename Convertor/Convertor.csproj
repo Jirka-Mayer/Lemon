@@ -41,6 +41,7 @@
     <Compile Include="Json\JsonNull.cs" />
     <Compile Include="Json\JsonBoolean.cs" />
     <Compile Include="Json\JsonNumber.cs" />
+    <Compile Include="Json\JsonArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

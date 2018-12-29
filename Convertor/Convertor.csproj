@@ -37,14 +37,19 @@
     <Compile Include="Json\JsonParsingException.cs" />
     <Compile Include="Json\JsonEntity.cs" />
     <Compile Include="Json\JsonObject.cs" />
-    <Compile Include="Json\StringifyOptions.cs" />
     <Compile Include="Json\JsonNull.cs" />
     <Compile Include="Json\JsonBoolean.cs" />
     <Compile Include="Json\JsonNumber.cs" />
     <Compile Include="Json\JsonArray.cs" />
+    <Compile Include="Xml\XP.cs" />
+    <Compile Include="Xml\XmlNode.cs" />
+    <Compile Include="Json\StringifyOptions.cs" />
+    <Compile Include="Xml\StringifyOptions.cs" />
+    <Compile Include="Xml\XmlText.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />
+    <Folder Include="Xml\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lemon\Lemon.csproj">

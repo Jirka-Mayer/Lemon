@@ -25,12 +25,12 @@ namespace Lemon
         /// </summary>
         public TValue MatchedValue => InnerParser.Value;
 
-        public OptionalParser(ParserFactory<TValue> parser)
+        public OptionalParser(ParserFactory<TValue> parser, TValue defaultValue = default(TValue))
         {
             factory = parser;
 
             // default processor
-            this.Processor = p => Matched ? InnerParser.Value : default(TValue);
+            this.Processor = p => Matched ? InnerParser.Value : defaultValue;
         }
 
         protected override ParsingException PerformParsing(int from, string input)

@@ -177,11 +177,11 @@ namespace Lemon
         /// <typeparam name="TValue">Return type of the inner parser and the whole parser</typeparam>
         /// <returns></returns>
         public static ParserFactory<OptionalParser<TValue>, TValue> Optional<TValue>(
-            ParserFactory<TValue> parser
+            ParserFactory<TValue> parser, TValue defaultValue = default(TValue)
         )
         {
             return new ParserFactory<OptionalParser<TValue>, TValue>(() => {
-                return new OptionalParser<TValue>(parser);
+                return new OptionalParser<TValue>(parser, defaultValue);
             });
         }
 

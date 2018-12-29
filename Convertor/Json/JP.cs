@@ -134,6 +134,15 @@ namespace Convertor.Json
             });
         }
 
+        public static ParserFactory<JsonNumber> Number()
+        {
+            return P.Regex<JsonNumber>(
+                @"(-?)(0|([1-9]\d*))(\.\d+)?([eE][+-]?\d+)?"
+            ).Process(p => new JsonNumber(
+                Double.Parse(p.GetMatchedString())
+            ));
+        }
+
         public static ParserFactory<JsonNull> Null()
         {
             return P.Literal<JsonNull>("null")

@@ -40,6 +40,7 @@
     <Compile Include="Json\StringifyOptions.cs" />
     <Compile Include="Json\JsonNull.cs" />
     <Compile Include="Json\JsonBoolean.cs" />
+    <Compile Include="Json\JsonNumber.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

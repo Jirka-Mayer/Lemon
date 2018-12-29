@@ -15,6 +15,17 @@ namespace Lemon
         public struct Void {}
 
         /// <summary>
+        /// Matches a literal string and lets you specify returned value in the processor
+        /// </summary>
+        /// <param name="literal">String to match</param>
+        public static ParserFactory<LiteralParser<TValue>, TValue> Literal<TValue>(string literal)
+        {
+            return new ParserFactory<LiteralParser<TValue>, TValue>(() => {
+                return new LiteralParser<TValue>(literal);
+            });
+        }
+
+        /// <summary>
         /// Matches a literal string and returns the string as the value
         /// </summary>
         /// <param name="literal">String to match</param>

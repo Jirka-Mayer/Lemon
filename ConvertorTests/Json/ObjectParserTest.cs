@@ -63,5 +63,18 @@ namespace ConvertorTests.Json
             parser.Parse(@"{""foo"": {""bar"": ""baz""}}   lorem  ");
             Assert.True(parser.Success);
         }
+
+        [TestCase]
+        public void ItParsesNull()
+        {
+            var parser = JP.Null().CreateAbstractValuedParser();
+            parser.Parse("null");
+            Assert.True(parser.Success);
+            Assert.AreEqual(typeof(JsonNull), parser.Value.GetType());
+
+            parser = JP.Null().CreateAbstractValuedParser();
+            parser.Parse("foo");
+            Assert.False(parser.Success);
+        }
     }
 }

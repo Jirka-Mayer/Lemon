@@ -15,7 +15,8 @@ namespace Convertor.Json
             // use parser builders (not factories) to help prevent infinite recursion
             return P.AnyB<JsonEntity>(
                 () => P.Cast<JsonEntity, JsonObject>(JP.Object()),
-                () => P.Cast<JsonEntity, JsonString>(JP.String())
+                () => P.Cast<JsonEntity, JsonString>(JP.String()),
+                () => P.Cast<JsonEntity, JsonNull>(JP.Null())
             );
         }
 
@@ -23,10 +24,10 @@ namespace Convertor.Json
         {
             return P.Concat<JsonObject>(
                 P.Literal("{"),
-                Whitespace(),
+                JP.Whitespace(),
 
                 P.Repeat<JsonObject, KeyValuePair<string, JsonEntity>>(
-                    ObjectItem(),
+                    JP.ObjectItem(),
                     Quantification.Star
                 ).Process(p => {
                     var o = new JsonObject();
@@ -35,7 +36,7 @@ namespace Convertor.Json
                     return o;
                 }),
 
-                Whitespace(),
+                JP.Whitespace(),
                 P.Literal("}")
             ).Process(p => ((Parser<JsonObject>)p.Parts[2]).Value);
         }
@@ -54,7 +55,7 @@ namespace Convertor.Json
                 () => P.Optional<P.Void>(
                     P.Concat<P.Void>(
                         P.Literal(","),
-                        Whitespace()
+                        JP.Whitespace()
                     )
                 ),
                 JP.Whitespace
@@ -130,6 +131,12 @@ namespace Convertor.Json
                     $"Unknown escaped character '{ p.Value }'"
                 );
             });
+        }
+
+        public static ParserFactory<JsonNull> Null()
+        {
+            return P.Literal<JsonNull>("null")
+                .Process(p => new JsonNull());
         }
 
         public static ParserFactory<string> Whitespace()

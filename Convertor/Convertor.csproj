@@ -38,6 +38,7 @@
     <Compile Include="Json\JsonEntity.cs" />
     <Compile Include="Json\JsonObject.cs" />
     <Compile Include="Json\StringifyOptions.cs" />
+    <Compile Include="Json\JsonNull.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

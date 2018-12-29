@@ -76,5 +76,23 @@ namespace ConvertorTests.Json
             parser.Parse("foo");
             Assert.False(parser.Success);
         }
+
+        [TestCase]
+        public void ItParsesBoolean()
+        {
+            var parser = JP.Boolean().CreateAbstractValuedParser();
+            parser.Parse("true");
+            Assert.True(parser.Success);
+            Assert.True(parser.Value.Value);
+
+            parser = JP.Boolean().CreateAbstractValuedParser();
+            parser.Parse("false");
+            Assert.True(parser.Success);
+            Assert.False(parser.Value.Value);
+
+            parser = JP.Boolean().CreateAbstractValuedParser();
+            parser.Parse("bar");
+            Assert.False(parser.Success);
+        }
     }
 }

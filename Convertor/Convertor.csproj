@@ -39,6 +39,7 @@
     <Compile Include="Json\JsonObject.cs" />
     <Compile Include="Json\StringifyOptions.cs" />
     <Compile Include="Json\JsonNull.cs" />
+    <Compile Include="Json\JsonBoolean.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

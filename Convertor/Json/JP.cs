@@ -16,7 +16,8 @@ namespace Convertor.Json
             return P.AnyB<JsonEntity>(
                 () => P.Cast<JsonEntity, JsonObject>(JP.Object()),
                 () => P.Cast<JsonEntity, JsonString>(JP.String()),
-                () => P.Cast<JsonEntity, JsonNull>(JP.Null())
+                () => P.Cast<JsonEntity, JsonNull>(JP.Null()),
+                () => P.Cast<JsonEntity, JsonBoolean>(JP.Boolean())
             );
         }
 
@@ -137,6 +138,14 @@ namespace Convertor.Json
         {
             return P.Literal<JsonNull>("null")
                 .Process(p => new JsonNull());
+        }
+
+        public static ParserFactory<JsonBoolean> Boolean()
+        {
+            return P.Any<JsonBoolean>(
+                P.Literal<JsonBoolean>("true").Process(p => new JsonBoolean(true)),
+                P.Literal<JsonBoolean>("false").Process(p => new JsonBoolean(false))
+            );
         }
 
         public static ParserFactory<string> Whitespace()

@@ -45,6 +45,7 @@
     <Compile Include="Xml\AttributeParserTest.cs" />
     <Compile Include="Xml\ElementParserTest.cs" />
     <Compile Include="ToJsonTest.cs" />
+    <Compile Include="ToXmlTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

@@ -28,5 +28,12 @@ namespace ConvertorTests.Xml
             s = new XmlText("lorem \" ipsum");
             Assert.AreEqual("lorem &quot; ipsum", s.Stringify());
         }
+
+        [TestCase]
+        public void ItSerializesAttributes()
+        {
+            var a = new XmlAttribute("foo", new XmlText("ipsum & bar"));
+            Assert.AreEqual("foo=\"ipsum &amp; bar\"", a.Stringify());
+        }
     }
 }

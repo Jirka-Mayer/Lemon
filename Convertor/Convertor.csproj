@@ -46,6 +46,7 @@
     <Compile Include="Json\StringifyOptions.cs" />
     <Compile Include="Xml\StringifyOptions.cs" />
     <Compile Include="Xml\XmlText.cs" />
+    <Compile Include="Xml\XmlAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

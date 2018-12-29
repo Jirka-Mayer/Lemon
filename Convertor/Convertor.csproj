@@ -50,6 +50,7 @@
     <Compile Include="Xml\XmlElement.cs" />
     <Compile Include="Xml\Stringifiable.cs" />
     <Compile Include="Xml\XmlParsingException.cs" />
+    <Compile Include="ToJson.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

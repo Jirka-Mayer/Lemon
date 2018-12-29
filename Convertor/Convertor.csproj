@@ -47,6 +47,9 @@
     <Compile Include="Xml\StringifyOptions.cs" />
     <Compile Include="Xml\XmlText.cs" />
     <Compile Include="Xml\XmlAttribute.cs" />
+    <Compile Include="Xml\XmlElement.cs" />
+    <Compile Include="Xml\Stringifiable.cs" />
+    <Compile Include="Xml\XmlParsingException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

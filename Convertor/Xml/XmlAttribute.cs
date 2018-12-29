@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Convertor.Xml
 {
-    public class XmlAttribute : XmlNode
+    public class XmlAttribute : Stringifiable
     {
         public string Name { get; private set; }
         public XmlText Value { get; private set; }

@@ -43,6 +43,7 @@
     <Compile Include="Xml\StringifyTest.cs" />
     <Compile Include="Xml\TextParserTest.cs" />
     <Compile Include="Xml\AttributeParserTest.cs" />
+    <Compile Include="Xml\ElementParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Json\" />

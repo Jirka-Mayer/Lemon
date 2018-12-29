@@ -35,5 +35,21 @@ namespace ConvertorTests.Xml
             var a = new XmlAttribute("foo", new XmlText("ipsum & bar"));
             Assert.AreEqual("foo=\"ipsum &amp; bar\"", a.Stringify());
         }
+
+        [TestCase]
+        public void ItSerializesElements()
+        {
+            var a = new XmlElement("tag", false);
+            Assert.AreEqual("<tag/>", a.Stringify());
+
+            a = new XmlElement("tag", true);
+            Assert.AreEqual("<tag></tag>", a.Stringify());
+
+            a = new XmlElement("tag", true);
+            a.Attributes.Add(new XmlAttribute("foo", new XmlText("bar")));
+            a.Content.Add(new XmlElement("bag", false));
+            a.Content.Add(new XmlText("lorem"));
+            Assert.AreEqual("<tag foo=\"bar\"><bag/>lorem</tag>", a.Stringify());
+        }
     }
 }

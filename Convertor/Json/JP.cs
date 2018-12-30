@@ -123,7 +123,7 @@ namespace Convertor.Json
         {
             return P.Concat<string>(
                 P.Literal("\\"),
-                P.StringRegex(@"[\""\\nrt]|(u[0-9A-Fa-f]{4})")
+                P.StringRegex(@"[\""\\nrt/]|(u[0-9A-Fa-f]{4})")
             ).Process(parser => {
                 Parser<string> p = (Parser<string>)parser.Parts[1];
 
@@ -151,6 +151,7 @@ namespace Convertor.Json
                 {
                     case '"': return "\"";
                     case '\\': return "\\";
+                    case '/': return "/";
                     case 'n': return "\n";
                     case 'r': return "\r";
                     case 't': return "\t";

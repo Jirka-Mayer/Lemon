@@ -26,6 +26,7 @@ namespace Convertor.Json
                 {
                     case '"': writer.Write("\\\""); break;
                     case '\\': writer.Write("\\\\"); break;
+                    case '/': writer.Write("\\/"); break;
                     case '\n': writer.Write("\\n"); break;
                     case '\r': writer.Write("\\r"); break;
                     case '\t': writer.Write("\\t"); break;

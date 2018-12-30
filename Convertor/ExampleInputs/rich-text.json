@@ -1,0 +1,300 @@
+{
+    "title": "",
+    "comittedAt": null,
+    "data": {
+        "image-widget": {
+            "@type": "mycelium::image",
+            "@spore": "mountain_Hd5L7.jpg"
+        },
+        "rich-text": {
+            "ops": [
+                {
+                    "insert": "Rich"
+                },
+                {
+                    "attributes": {
+                        "bold": true
+                    },
+                    "insert": " text"
+                },
+                {
+                    "insert": " here...\n\n"
+                },
+                {
+                    "insert": {
+                        "image": {
+                            "url": "http:\/\/localhost:8000\/resource\/mountain_CTW5R.jpg",
+                            "@spore": "mountain_CTW5R.jpg",
+                            "title": "An interesting image here..."
+                        }
+                    }
+                },
+                {
+                    "insert": "heading\n"
+                },
+                {
+                    "attributes": {
+                        "link": "mailto:jirkamayer@gmail.com"
+                    },
+                    "insert": "jirkamayer@gmail.com"
+                },
+                {
+                    "insert": "\nWould you like to visit "
+                },
+                {
+                    "attributes": {
+                        "link": "http:\/\/google.com"
+                    },
+                    "insert": "Google"
+                },
+                {
+                    "insert": "\n"
+                },
+                {
+                    "insert": {
+                        "table": {
+                            "rows": [
+                                [
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "lorem "
+                                            },
+                                            {
+                                                "attributes": {
+                                                    "link": "http:\/\/lorem"
+                                                },
+                                                "insert": "ipsum"
+                                            },
+                                            {
+                                                "insert": " dolor sit "
+                                            },
+                                            {
+                                                "attributes": {
+                                                    "bold": true
+                                                },
+                                                "insert": "amet"
+                                            },
+                                            {
+                                                "insert": " consedur\n"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "lorem\n"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                [
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "foo foo\n"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "lorem "
+                                            },
+                                            {
+                                                "attributes": {
+                                                    "link": "bla"
+                                                },
+                                                "insert": "ipsum"
+                                            },
+                                            {
+                                                "insert": " dolor sit amet\n"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "attributes": {
+                        "bold": true
+                    },
+                    "insert": "lorem ipsum dolor"
+                },
+                {
+                    "insert": " dolor sit "
+                },
+                {
+                    "attributes": {
+                        "link": "http:\/\/lorem"
+                    },
+                    "insert": "amet"
+                },
+                {
+                    "insert": "\n"
+                }
+            ],
+            "@type": "mycelium::rich-text"
+        },
+        "plain-text": {
+            "@type": "mycelium::rich-text",
+            "ops": [
+                {
+                    "insert": "Lorem ipsum...\n"
+                }
+            ]
+        },
+        "rich-text-2": {
+            "ops": [
+                {
+                    "insert": "Rich text here..."
+                },
+                {
+                    "attributes": {
+                        "header": 2
+                    },
+                    "insert": "\n"
+                },
+                {
+                    "insert": "ladoasdas\n"
+                },
+                {
+                    "insert": {
+                        "table": {
+                            "rows": [
+                                [
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "hahahahah"
+                                            },
+                                            {
+                                                "attributes": {
+                                                    "header": 3
+                                                },
+                                                "insert": "\n"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "\n"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                [
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "\n"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "ops": [
+                                            {
+                                                "insert": "\n"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            ]
+                        }
+                    }
+                },
+                {
+                    "insert": "foo\n"
+                }
+            ],
+            "@type": "mycelium::rich-text"
+        },
+        "other-image": {
+            "@type": "mycelium::image",
+            "@spore": "shore_nPpAo.jpg",
+            "size": "fill"
+        },
+        "yet-another-image": {
+            "@type": "mycelium::image",
+            "size": "fill",
+            "@spore": "river_3f8wz.jpg"
+        }
+    },
+    "spores": {
+        "mountain_CTW5R.jpg": {
+            "handle": "mountain_CTW5R.jpg",
+            "type": "image",
+            "extension": "jpg",
+            "filename": "mountain_CTW5R",
+            "attributes": {
+                "width": 6000,
+                "height": 3776,
+                "cache": [
+                    240,
+                    480,
+                    1280,
+                    1920,
+                    2560
+                ],
+                "cachedAt": "2018-01-31 16:43:03"
+            }
+        },
+        "mountain_Hd5L7.jpg": {
+            "handle": "mountain_Hd5L7.jpg",
+            "type": "image",
+            "extension": "jpg",
+            "filename": "mountain_Hd5L7",
+            "attributes": {
+                "width": 6000,
+                "height": 3776,
+                "cache": [
+                    240,
+                    480,
+                    1280,
+                    1920,
+                    2560
+                ],
+                "cachedAt": "2018-02-01 17:25:03"
+            }
+        },
+        "shore_nPpAo.jpg": {
+            "handle": "shore_nPpAo.jpg",
+            "type": "image",
+            "extension": "jpg",
+            "filename": "shore_nPpAo",
+            "attributes": {
+                "width": 5472,
+                "height": 3648,
+                "cache": [
+                    240,
+                    480,
+                    1280,
+                    1920,
+                    2560
+                ],
+                "cachedAt": "2018-02-01 17:40:45"
+            }
+        },
+        "river_3f8wz.jpg": {
+            "handle": "river_3f8wz.jpg",
+            "type": "image",
+            "extension": "jpg",
+            "filename": "river_3f8wz",
+            "attributes": {
+                "width": 3000,
+                "height": 3000,
+                "cache": [
+                    240,
+                    480,
+                    1280,
+                    1920,
+                    2560
+                ],
+                "cachedAt": "2018-02-01 17:42:05"
+            }
+        }
+    }
+}

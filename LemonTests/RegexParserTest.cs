@@ -55,5 +55,14 @@ namespace LemonTests
             parser.Parse("asd42");
             Assert.False(parser.Success);
         }
+
+        [TestCase]
+        public void ItIsMultiline()
+        {
+            var parser = P.StringRegex(@"[\s\S]*").CreateAbstractValuedParser();
+            parser.Parse("lorem\nipsum");
+            Assert.True(parser.Success);
+            Assert.AreEqual(11, parser.MatchedLength);
+        }
     }
 }

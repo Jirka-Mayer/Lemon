@@ -9,6 +9,9 @@ namespace Convertor
     {
         public static void Main(string[] args)
         {
+            // TODO:
+            // - pretty print xml (+ example file)
+
             if (args.Length != 3)
             {
                 PrintUsage();
@@ -80,7 +83,17 @@ namespace Convertor
             }
             catch (IOException e)
             {
-                Console.WriteLine("There was a problem with file access:");
+                Console.WriteLine("There was a problem with file access:\n");
+                Console.WriteLine(e);
+            }
+            catch (Lemon.ParsingException e)
+            {
+                Console.WriteLine($"Cannot parse the file '{ sourceFile }':\n");
+                Console.WriteLine(e);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception occure:\n");
                 Console.WriteLine(e);
             }
             finally

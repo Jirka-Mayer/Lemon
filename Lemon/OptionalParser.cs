@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Lemon
 {
@@ -44,7 +45,22 @@ namespace Lemon
             else
                 MatchedLength = 0;
 
+            AlmostMatchedLength = InnerParser.AlmostMatchedLength;
+
             return null;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append($"Optional<{ typeof(TValue).FullName }>(...)\n");
+            builder.Append($"    Matched: { this.Matched }\n");
+
+            return builder.ToString();
         }
     }
 }

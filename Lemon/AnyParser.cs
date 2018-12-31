@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Linq;
 
 namespace Lemon
 {
@@ -24,6 +26,9 @@ namespace Lemon
         /// The parser that first matched the input
         /// </summary>
         public Parser<TValue> MatchedParser => Parts[MatchedParserIndex];
+
+        // for this parser the values coincide
+        public override int AlmostMatchedLength => MatchedLength;
 
         public AnyParser(params ParserFactory<TValue>[] parts)
         {
@@ -55,9 +60,38 @@ namespace Lemon
                 }
             }
 
-            // if no parser succeeds, the last one is to blame
-            Parts[Parts.Length - 1].Exception.PushParser(this);
-            return Parts[Parts.Length - 1].Exception;
+            // get the parser that ALMOST matched the most charaters
+            // that one was probbably closest to the truth
+            int maxMatched = 0;
+            int maxMatchedIndex = Parts.Length - 1;
+            for (int i = 0; i < Parts.Length; i++)
+            {
+                if (Parts[i].AlmostMatchedLength > maxMatched)
+                {
+                    maxMatchedIndex = i;
+                    maxMatched = Parts[i].AlmostMatchedLength;
+                }
+            }
+
+            var e = Parts[maxMatchedIndex].Exception;
+            e.PushParser(this);
+            return e;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append($"Any<{ typeof(TValue).FullName }>({ Parts.Length } parsers)\n");
+            
+            builder.Append("    AlmostMatchedLengths: [");
+            builder.Append(String.Join(", ", Parts.Select(p => p.AlmostMatchedLength.ToString())));
+            builder.Append("]\n");
+
+            return builder.ToString();
         }
     }
 }

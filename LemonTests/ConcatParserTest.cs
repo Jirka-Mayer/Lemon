@@ -35,6 +35,7 @@ namespace LemonTests
             parser.Parse("42,5");
             
             Assert.False(parser.Success);
+            Assert.AreEqual(2, parser.MatchedLength);
             
             Assert.AreEqual(2, parser.Exception.Position);
             Assert.AreEqual(1, parser.SuccessfulParsers);

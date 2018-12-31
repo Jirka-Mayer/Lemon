@@ -15,7 +15,7 @@ namespace Convertor.Xml
             return P.AnyB<XmlNode>(
                 () => P.Cast<XmlNode, XmlElement>(Element()),
                 () => P.Cast<XmlNode, XmlText>(Text())
-            );
+            ).Name(nameof(XP.Node));
         }
 
         public static ParserFactory<XmlElement> Element()
@@ -23,7 +23,7 @@ namespace Convertor.Xml
             return P.AnyB<XmlElement>(
                 PairElement,
                 NonPairElement
-            );
+            ).Name(nameof(XP.Element));
         }
 
         public static ParserFactory<XmlElement> NonPairElement()
@@ -42,7 +42,7 @@ namespace Convertor.Xml
                     ((Parser<XmlAttribute[]>)p.Parts[2]).Value
                 );
                 return e;
-            });
+            }).Name(nameof(XP.NonPairElement));
         }
 
         public static ParserFactory<XmlElement> PairElement()
@@ -78,7 +78,7 @@ namespace Convertor.Xml
                         $"Tag <{ e.Tag }> does not end with the same name, but with </{ ending }> instead."
                     );
                 return e;
-            });
+            }).Name(nameof(XP.PairElement));
         }
 
         private static ParserFactory<XmlAttribute[]> AttributeList()
@@ -92,17 +92,19 @@ namespace Convertor.Xml
                     ).Process(p => ((Parser<XmlAttribute>)p.Parts[0]).Value),
                     Quantification.Star
                 ).Process(p => p.Matches.Select(m => m.Value).ToArray())
-            ).Process(p => ((Parser<XmlAttribute[]>)p.Parts[1]).Value);
+            )
+            .Process(p => ((Parser<XmlAttribute[]>)p.Parts[1]).Value)
+            .Name(nameof(XP.AttributeList));
         }
 
         private static ParserFactory<string> ElementName()
         {
-            return P.StringRegex(@"[^\s</>\""]+");
+            return P.StringRegex(@"[^\s</>\""]+").Name(nameof(XP.ElementName));
         }
 
         private static ParserFactory<string> Whitespace()
         {
-            return P.StringRegex(@"[ \n\r\t]*");
+            return P.StringRegex(@"[ \n\r\t]*").Name(nameof(XP.Whitespace));
         }
 
         public static ParserFactory<XmlAttribute> Attribute()
@@ -115,7 +117,7 @@ namespace Convertor.Xml
             ).Process(p => new XmlAttribute(
                 ((Parser<string>)p.Parts[0]).Value,
                 ((Parser<XmlText>)p.Parts[2]).Value
-            ));
+            )).Name(nameof(XP.Attribute));
         }
 
         public static ParserFactory<XmlText> Text(bool inDocument = true)
@@ -128,7 +130,9 @@ namespace Convertor.Xml
                     XP.CharacterEntity()
                 ),
                 inDocument ? Quantification.Plus : Quantification.Star
-            ).Process(p => new XmlText(String.Concat(p.Matches.Select(m => m.Value))));
+            )
+            .Process(p => new XmlText(String.Concat(p.Matches.Select(m => m.Value))))
+            .Name(nameof(XP.Text));
         }
 
         private static ParserFactory<string> CharacterEntity()
@@ -139,7 +143,7 @@ namespace Convertor.Xml
                 P.Literal<string>("&quot;").Process(p => "\""),
                 P.Literal<string>("&lt;").Process(p => "<"),
                 P.Literal<string>("&gt;").Process(p => ">")
-            );
+            ).Name(nameof(XP.CharacterEntity));
         }
     }
 }

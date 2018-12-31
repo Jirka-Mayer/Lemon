@@ -20,7 +20,7 @@ namespace Convertor.Json
                 () => P.Cast<JsonEntity, JsonNumber>(JP.Number()),
                 () => P.Cast<JsonEntity, JsonNull>(JP.Null()),
                 () => P.Cast<JsonEntity, JsonBoolean>(JP.Boolean())
-            );
+            ).Name(nameof(JP.Entity));
         }
 
         public static ParserFactory<JsonObject> Object()
@@ -41,7 +41,9 @@ namespace Convertor.Json
 
                 JP.Whitespace(),
                 P.Literal("}")
-            ).Process(p => ((Parser<JsonObject>)p.Parts[2]).Value);
+            )
+            .Process(p => ((Parser<JsonObject>)p.Parts[2]).Value)
+            .Name(nameof(JP.Object));
         }
 
         private static ParserFactory<KeyValuePair<string, JsonEntity>> ObjectItem()
@@ -67,7 +69,8 @@ namespace Convertor.Json
                     ((Parser<JsonString>)p.Parts[1]).Value.Value,
                     ((Parser<JsonEntity>)p.Parts[5]).Value
                 );
-            });
+            })
+            .Name(nameof(JP.ObjectItem));
         }
 
         public static ParserFactory<JsonArray> Array()
@@ -93,7 +96,9 @@ namespace Convertor.Json
                 }),
 
                 P.Literal("]")
-            ).Process(p => ((Parser<JsonArray>)p.Parts[2]).Value);
+            )
+            .Process(p => ((Parser<JsonArray>)p.Parts[2]).Value)
+            .Name(nameof(JP.Array));
         }
 
         public static ParserFactory<JsonString> String()
@@ -116,7 +121,8 @@ namespace Convertor.Json
                 return new JsonString(
                     ((Parser<string>)p.Parts[1]).Value
                 );
-            });
+            })
+            .Name(nameof(JP.String));
         }
 
         private static ParserFactory<string> EscapedStringCharacter()
@@ -160,7 +166,7 @@ namespace Convertor.Json
                 throw new JsonParsingException(
                     $"Unknown escaped character '{ p.Value }'"
                 );
-            });
+            }).Name(nameof(JP.EscapedStringCharacter));
         }
 
         public static ParserFactory<JsonNumber> Number()
@@ -169,13 +175,14 @@ namespace Convertor.Json
                 @"(-?)(0|([1-9]\d*))(\.\d+)?([eE][+-]?\d+)?"
             ).Process(p => new JsonNumber(
                 Double.Parse(p.GetMatchedString())
-            ));
+            )).Name(nameof(JP.Number));
         }
 
         public static ParserFactory<JsonNull> Null()
         {
             return P.Literal<JsonNull>("null")
-                .Process(p => new JsonNull());
+                .Process(p => new JsonNull())
+                .Name(nameof(JP.Null));
         }
 
         public static ParserFactory<JsonBoolean> Boolean()
@@ -183,12 +190,12 @@ namespace Convertor.Json
             return P.Any<JsonBoolean>(
                 P.Literal<JsonBoolean>("true").Process(p => new JsonBoolean(true)),
                 P.Literal<JsonBoolean>("false").Process(p => new JsonBoolean(false))
-            );
+            ).Name(nameof(JP.Boolean));
         }
 
         public static ParserFactory<string> Whitespace()
         {
-            return P.StringRegex(@"[ \t\n\r]*");
+            return P.StringRegex(@"[ \t\n\r]*").Name(nameof(JP.Whitespace));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Lemon
 {
@@ -18,12 +19,23 @@ namespace Lemon
 
         protected override ParsingException PerformParsing(int from, string input)
         {
-            var e = base.PerformParsing(from, input);
+            // Note: No pushing of parser to the exception because it's already done by the parent class
 
-            if (e != null)
-                e.PushParser(this);
+            return base.PerformParsing(from, input);
+        }
 
-            return e;
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append(
+                $"Cast<{ typeof(TTo).FullName }, { typeof(TFrom).FullName }>(...)\n"
+            );
+
+            return builder.ToString();
         }
     }
 }

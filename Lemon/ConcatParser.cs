@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using System.Linq;
 
 namespace Lemon
 {
@@ -38,6 +40,8 @@ namespace Lemon
 
                 p.Parse(from + MatchedLength, input);
 
+                AlmostMatchedLength += p.AlmostMatchedLength;
+
                 if (!p.Success)
                 {
                     p.Exception.PushParser(this);
@@ -48,6 +52,26 @@ namespace Lemon
             }
 
             return null;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append($"Concat<{ typeof(TValue).FullName }>({ Parts.Length } parsers)\n");
+            
+            builder.Append($"    AlmostMatchedLength: { AlmostMatchedLength }\n");
+
+            builder.Append("    Succeeded: [");
+            builder.Append(String.Join(", ", Parts.Select(
+                p => p == null ? "?" : p.Success.ToString()
+            )));
+            builder.Append("]\n");
+
+            return builder.ToString();
         }
     }
 }

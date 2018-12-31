@@ -25,6 +25,11 @@ namespace Lemon
         private SpecificParserProcessor processor;
 
         /// <summary>
+        /// Name of the parser
+        /// </summary>
+        private string name;
+
+        /// <summary>
         /// Creates new parser factory instance
         /// </summary>
         /// <param name="parserCreator">The function that actually creates the parser</param>
@@ -46,6 +51,18 @@ namespace Lemon
         }
 
         /// <summary>
+        /// Sets a name to be assigned to the parser after creation
+        /// </summary>
+        /// <param name="nema">Name of the parser</param>
+        /// <returns>Itself to be chainable</returns>
+        public ParserFactory<TParser, TValue> Name(string name)
+        {
+            this.name = name;
+
+            return this;
+        }
+
+        /// <summary>
         /// Creates a new parser instance
         /// </summary>
         public TParser CreateParser()
@@ -56,6 +73,10 @@ namespace Lemon
             // if a processor was given
             if (this.processor != null)
                 parser.Processor = (Parser<TValue> p) => this.processor((TParser)p);
+
+            // set parser name
+            if (name != null)
+                parser.Name = name;
 
             return parser;
         }

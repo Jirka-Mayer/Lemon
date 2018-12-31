@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace Lemon
@@ -33,6 +34,58 @@ namespace Lemon
         public Parser[] GetParserStack()
         {
             return parserStack.ToArray();
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            builder.Append(nameof(Lemon));
+            builder.Append(".");
+            builder.Append(nameof(ParsingException));
+            builder.Append(": ");
+            builder.Append(this.Message);
+            builder.Append("\n");
+
+            builder.Append(
+                "At position: " + Position +
+                $" (Line: { GetLine() } Char: { GetCharacter() })"
+            );
+
+            builder.Append("\n\nParser stack:\n");
+
+            foreach (Parser p in parserStack)
+                builder.Append(p.ToString()); // newline is inside the ToString
+
+            return builder.ToString();
+        }
+
+        public int GetLine()
+        {
+            int line = 1;
+            
+            for (int i = 0; i <= Position; i++)
+            {
+                if (Input[i] == '\n')
+                    line++;
+            }
+
+            return line;
+        }
+
+        public int GetCharacter()
+        {
+            int character = 0;
+            
+            for (int i = 0; i <= Position; i++)
+            {
+                if (Input[i] == '\n')
+                    character = 0;
+                else
+                    character++;
+            }
+
+            return character;
         }
     }
 }

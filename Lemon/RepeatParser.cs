@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Collections.Generic;
 
 namespace Lemon
@@ -34,6 +35,7 @@ namespace Lemon
         protected override ParsingException PerformParsing(int from, string input)
         {
             Matches = new List<Parser<TSubValue>>();
+            AlmostMatchedLength = 0;
             MatchedLength = 0;
 
             Parser<TSubValue> p = null;
@@ -45,11 +47,14 @@ namespace Lemon
                 
                 p.Parse(from + MatchedLength, input);
 
+                AlmostMatchedLength += p.AlmostMatchedLength;
+
                 if (!p.Success)
                     break;
 
-                Matches.Add(p);
                 MatchedLength += p.MatchedLength;
+
+                Matches.Add(p);
             }
 
             // not enough matches
@@ -66,6 +71,21 @@ namespace Lemon
             }
 
             return null;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append($"Repeat<{ typeof(TValue).FullName }>(..., { quantification.ToString() })\n");
+            builder.Append($"    AlmostMatchedLength: { AlmostMatchedLength }\n");
+            builder.Append($"    MatchedLength: { MatchedLength }\n");
+            builder.Append($"    MatchCount: { MatchCount }\n");
+
+            return builder.ToString();
         }
     }
 

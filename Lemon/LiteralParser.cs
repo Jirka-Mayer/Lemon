@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Lemon
 {
@@ -26,21 +27,40 @@ namespace Lemon
             {
                 if (from + i >= input.Length)
                     return new ParsingException(
-                        $"Literal '{ literal }' not matching." +
+                        $"Literal '{ literal }' not matching. " +
                         $"Expected character '{ literal[i] }'. Instead reached end of input.",
                         input, from + i, this
                     );
 
                 if (input[from + i] != literal[i])
                     return new ParsingException(
-                        $"Literal '{ literal }' not matching." +
+                        $"Literal '{ literal }' not matching. " +
                         $"Expected character '{ literal[i] }'. Instead found '{ input[from + i] }'.",
                         input, from + i, this
                     );
+
+                AlmostMatchedLength = i + 1;
             }
 
-            this.MatchedLength = literal.Length;
+            MatchedLength = literal.Length;
+
             return null;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append(
+                $"Literal<{ typeof(TValue).FullName }>(\"{ literal }\")\n"
+            );
+            
+            builder.Append($"    AlmostMatchedLength: { AlmostMatchedLength }\n");
+
+            return builder.ToString();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Lemon
@@ -23,6 +24,9 @@ namespace Lemon
             }
         }
         private Match match;
+
+        // for this parser the values coincide
+        public override int AlmostMatchedLength => MatchedLength;
 
         public RegexParser(string pattern, RegexOptions options = RegexOptions.None)
         {
@@ -51,6 +55,20 @@ namespace Lemon
 
             this.MatchedLength = match.Length;
             return null;
+        }
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+
+            if (Name != null)
+                builder.Append(Name + ": ");
+
+            builder.Append(
+                $"Regex<{ typeof(TValue).FullName }>(@\"{ pattern }\")\n"
+            );
+
+            return builder.ToString();
         }
     }
 }

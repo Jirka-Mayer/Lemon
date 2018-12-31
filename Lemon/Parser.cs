@@ -49,9 +49,19 @@ namespace Lemon
         private int matchedLength;
 
         /// <summary>
+        /// Number of characters that almost matched before (if at all) an exception was thrown
+        /// </summary>
+        public virtual int AlmostMatchedLength { get; protected set; }
+
+        /// <summary>
         /// The exception thrown during parsing
         /// </summary>
         public ParsingException Exception { get; private set; }
+
+        /// <summary>
+        /// Name of the parser
+        /// </summary>
+        public string Name { get; set; }
         
         /// <summary>
         /// Try to parse the input string

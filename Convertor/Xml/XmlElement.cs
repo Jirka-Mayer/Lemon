@@ -37,7 +37,7 @@ namespace Convertor.Xml
             bool printPair = Pair;
 
             if (options.collapseEmptyTags && Content.Count == 0)
-                printPair = true;
+                printPair = false;
 
             writer.Write("<");
             writer.Write(Tag);
@@ -56,8 +56,19 @@ namespace Convertor.Xml
 
             writer.Write(">");
 
-            foreach (XmlNode n in Content)
-                n.Stringify(writer, options);
+            if (Content.Count > 0)
+            {
+                options.currentIndent++;
+                
+                foreach (XmlNode n in Content)
+                {
+                    options.BreakLine(writer);
+                    n.Stringify(writer, options);
+                }
+
+                options.currentIndent--;
+                options.BreakLine(writer);
+            }
 
             writer.Write("</");
             writer.Write(Tag);

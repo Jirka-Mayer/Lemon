@@ -9,9 +9,6 @@ namespace Convertor
     {
         public static void Main(string[] args)
         {
-            // TODO:
-            // - pretty print xml (+ example file)
-
             if (args.Length != 3)
             {
                 PrintUsage();
@@ -128,7 +125,7 @@ namespace Convertor
             var xmlAst = ToXml.Convert(jsonAst);
             
             using (StreamWriter writer = new StreamWriter(xml))
-                xmlAst.Stringify(writer, new Xml.StringifyOptions());
+                xmlAst.Stringify(writer, Xml.StringifyOptions.PrettyPrint);
         }
 
         public static void PrettifyXml(string xml, Stream output)
@@ -136,7 +133,7 @@ namespace Convertor
             var xmlAst = ReadXml(xml);
             
             using (StreamWriter writer = new StreamWriter(output))
-                xmlAst.Stringify(writer, new Xml.StringifyOptions());
+                xmlAst.Stringify(writer, Xml.StringifyOptions.PrettyPrint);
         }
 
         public static void PrettifyJson(string json, Stream output)

@@ -27,6 +27,9 @@ namespace ConvertorTests.Xml
 
             s = new XmlText("lorem \" ipsum");
             Assert.AreEqual("lorem &quot; ipsum", s.Stringify());
+
+            s = new XmlText("  \n lorem ipsum \t \t\n");
+            Assert.AreEqual("lorem ipsum", s.Stringify(StringifyOptions.PrettyPrint));
         }
 
         [TestCase]
@@ -50,6 +53,11 @@ namespace ConvertorTests.Xml
             a.Content.Add(new XmlElement("bag", false));
             a.Content.Add(new XmlText("lorem"));
             Assert.AreEqual("<tag foo=\"bar\"><bag/>lorem</tag>", a.Stringify());
+
+            Assert.AreEqual(
+                "<tag foo=\"bar\">\n    <bag/>\n    lorem\n</tag>",
+                a.Stringify(StringifyOptions.PrettyPrint)
+            );
         }
     }
 }

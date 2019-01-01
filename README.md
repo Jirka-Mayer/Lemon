@@ -5,7 +5,7 @@ Mini framework pro psaní parserů + jeho použití (pretty printery na XML a JS
 
 > Zápočtový program pro C# - ZS 2018, Jiří Mayer
 
-Specifikace zadání je [zde](docs/spec.md).
+Specifikace zadání je [zde](docs/specs.md).
 
 Dokumentace
 -----------
@@ -110,11 +110,11 @@ typovaném jazyce jako je C#. Veškeré znalosti které jsem s podobnými věcmi
 Výsledkem je moře generických tříd a typových argumentů, ve kterém se člověk ztrácí. Navíc spousta
 chyb se stejně odchytí až za běhu, protože je všechno tak modulární a neurčité, že se musí všude přetypovávat.
 
-Takže možná parsování (alespoň takovéhle) opravu sedí lépe na dynamické jazyky. Nebo jsem to spíš napsal
-dynmicky ve statickém jazyku. Nevím.
+Takže možná parsování opravu sedí lépe na dynamické jazyky. Nebo jsem to spíš napsal
+dynamicky ve statickém jazyce. Nevím.
 
 Další problém, na který jsem narazil ke konci programování je, jak přesně šířit výjimky o neúspěšném parsování.
-Jakmile totiž někde požijeme alternaci, začne být problém určovat, kdo je viník. A když použijeme opakování
+Jakmile totiž někde požijeme alternaci, začne být problém určovat viníka. A když použijeme opakování
 parseru, tak ten začne házet vinu na sousední parsery a tedy data ve výjimce jsou skoro zavádějící.
 
 Problém jsem ale jen trochu zalepil a dál neřešil. Nebyl to cíl práce a neměl jsem to ani nijak

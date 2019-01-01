@@ -52,7 +52,7 @@ jako součást vyhodnocení druhého argumentu metodě `P.Concat(...)`.
 
 Čili tu máme s použitím factories podobný problém, jakému jsme chtěli pomocí factories předejít.
 
-Naštěstí Lemon podporuje pro většinu složených parserů `P.___` možnost předat místo factories přímo
+Naštěstí Lemon podporuje pro většinu složených parserů možnost předat místo factories přímo
 odkaz na bezparametrický builder. Takové varianty mají v názvu na konci písmeno `B` jakože argumenty jsou buildery.
 
 ```csharp

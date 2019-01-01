@@ -5,8 +5,8 @@ Parser je objekt, který dostane vstupní řetězec a pokusí se na jeho začát
 podřetězec, který splňuje kritéria parseru. Pokud hledání dopadne kladně, tak se provede
 zpracování řetězce a parser vrátí objekt, který řetězec nějak reprezentuje.
 
-Parser je po svém vytvořený nedotčený `p.IsPristine`, dokud se na něm nezavolá medota `Parse`.
-Poté se do něho uloží výsledek parsování a nelze použít znovu. To proto, aby se neměnil jeho vnitřní stav.
+Parser je po svém vytvoření nedotčený `p.IsPristine`, dokud se na něm nezavolá medota `Parse`.
+Poté se do něho uloží výsledek parsování a nelze ho použít znovu. To proto, aby se neměnil jeho vnitřní stav, aby byl immutable.
 
 Po provedení parsování je k dispozici několik metod a vlastností pro dotazování výsledku:
 

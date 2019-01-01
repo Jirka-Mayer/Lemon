@@ -31,7 +31,7 @@ Všechny informace se vypíšou naformátované pomocí metody `ToString()`.
 
 Problém je se selháním `AnyParseru`, protože typicky není jasné, který parser je ten, co měl nejspíš uspět, ale selhal.
 Takže se dělá to, že se porovná `AlmostMatchedLength` jednotivých parserů, vybere se první největší a jeho
-výjimka se pošla nahoru. To problém řeší docela dobře.
+výjimka se pošle nahoru. To problém řeší docela dobře.
 
 Stejně ale nastává problém s `RepeatParserem`. Protože když je opravdová chyba někde v opakovaném prvku, tak ale
 `RepeatParser` většinou uspěje, vadný prvek neukousne a tak na něm spadne první parser, který je po něm.

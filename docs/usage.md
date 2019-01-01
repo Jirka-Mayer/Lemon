@@ -6,9 +6,9 @@ Lemon je kolekce základních parserů které lze kombinovat pro stavbu dalšíc
 
 > Hlavní místo použití knihovny v programu jsou soubory [JP.cs](Convertor/Json/JP.cs) a [XP.cs](Convertor/Xml/XP.cs).
 
-Většinou když potřebuji parsovat složitý vstup, tak použiju několik parserů, ty si pojmenuji a skládám je dohromady.
-Konvence je taková, že jeden parser je reprezentovaný jednou metodou. Metody mohou být statické a budou v
-jedé třídě pohromadě.
+Většinou když potřebuju parsovat složitý vstup, tak použiju několik parserů, ty si pojmenuju a poskládám je dohromady.
+Konvence je taková, že jeden parser je reprezentovaný jednou metodou. Metody budou statické a budou v
+jedné třídě pohromadě.
 
 Takže řekněme, že stavíme kolekci mých parserů (MyParsers) `MP.cs`:
 
@@ -76,9 +76,9 @@ static class MP
 K dispozici jsou následující parsery, ostatní si člověk musí poskládat z nich:
 
 - `P.Literal<TValue>(string literal)` Uspěje, pokud vstup obsahuje doslova zadaný řetězec.
-- `P.Regex<TValue>(string pattern)` Uspěje, když uspěje regulární výraz na začátku vstupu.
+- `P.Regex<TValue>(string pattern)` Uspěje, když uspěje regulární výraz.
 - `P.Concat<TValue>(params ParserFactory[] parts)` Spojení více parserů za sebe. Konjunkce.
-- `P.Any<TValue>(params ParserFactory<TValue>[] parts)` Aplikuje parsery jeden po druhém, dokud není nějaký úspěšný. Disjunkce.
+- `P.Any<TValue>(params ParserFactory<TValue>[] parts)` Aplikuje parsery jeden po druhém, dokud není nějaký úspěšný. Disjunkce nebo alternace.
 - `P.Repeat<TValue, TSubValue>(Parser<TSubValue> parser, quantification)` Konkatenace jednoho parseru v daném množství.
 - `P.Optional<TValue>(Parser<TValue> parser)` Vždy úspěšné; může nebo nemusí aplikovat parser.
 - `P.Cast<TTo, TFrom>(Parser<TFrom> parser)` Přetypuje hodnotu vracenou parserem.

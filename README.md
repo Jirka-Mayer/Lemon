@@ -5,51 +5,117 @@ Mini framework pro psaní parserů + jeho použití (pretty printery na XML a JS
 
 > Zápočtový program pro C# - ZS 2018, Jiří Mayer
 
+Specifikace zadání je [zde](docs/spec.md).
 
-Zadání
-------
+Dokumentace
+-----------
 
-Parsování bude fungovat podobně jako třeba fungují regulární výrazy,
-jen parsery budou schopné načtený text rovnou převést na nějakou
-datovou strukturu.
+Dokumentace se skládá ze dvou částí - z dokumentace programu (Convertor) a knihovny (Lemon).
 
-Parser dostane vstupní řetězec a pokusí se na jeho začátku nalézt shodu.
-Pokud shodu nalezne, tak vrátí informace o tom, kolik znaků vstupu ukousl
-a vrátí datovou položku odpovídající načtenému vstupu.
 
-Ukázka používání frameworku:
+### Convertor
 
-```csharp
-// načte celočíslenou hodnotu vstupu
-Parser<int> parser = P.Regex<int>(@"[0-9]+")
-    .Label("integer") // titulek pro chybové hlášky
-    .Process((RegexParser p) => int.Parse(p.Text)) // vytvoření hodnoty
-    .CreateParser();
+Convertor je program na převod souborů mezi formáty XML a JSON.
 
-parser.Parse("42");
-int foo = parser.Success ? parser.Value : -1;
+Používá se následujícím způsobem:
 
-// jiný parser na zpracování C#-pového "using" příkazu
-return P.Concat<AST.UsingExpression>(
-    P.Literal("using"),
-    MP.Whitespace(),        // (MP = MyParsers)
-    MP.NamespacePath(),
-    MP.Semicolon()
-).Process(
-    (p) => new AST.UsingExpression(p.part[2].Value)
-);
+    convertor.exe [xml|json] [inputFile] [outputFile]
+
+První argument je jeden z řetězců `xml`, nebo `json` a označuje formát výstupu.
+
+Druhý argument je název vstupního souboru a jeho typ se odvodí z přípony souboru.
+
+Poslední argument je název výstupního souboru. Je-li místo něho zadaná pomlčka `-`, tak se výsledek
+vypíše na standardní výstup.
+
+Pokud jsou formáty vstupního i výstupního souboru stejné (např. oba jsou xml), tak program soubor pouze zformátuje.
+Pokud se formáty liší, tak se provede převod.
+
+Pokud je problém s načtením vstupního souboru (IO nebo špatný formát), tak program vypíše chybu.
+
+
+#### Převod JSON -> XML
+
+```json
+{
+    "foo": 42,
+    "bar": ["lorem", "ipsum"]
+}
+```
+
+Se převede na:
+
+```xml
+<object>
+    <item key="foo">
+        <number>42</number>
+    </item>
+    <item key="bar">
+        <array>
+            <string>lorem</string>
+            <string>ipsum</string>
+        </array>
+    </item>
+</object>
 ```
 
 
-Použití frameworku v programu
------------------------------
+#### Převod XML -> JSON
 
-Na ukázku použití frameworku naimplementuji dva pretty printery
-(tedy programy, co vezmou vstupní kód a vytisknou ho správně naformátovaný).
-Jeden jednodušší pro JSON a druhý složitější pro XML. Oba budou schované
-v jednom projektu jako jeden spustitelný soubor.
+```xml
+<foo>
+    Text before
+    <bar baz="asd">Lorem ipsum dolor.</bar>
+    Text after
+</foo>
+```
 
-Představa používání:
+Se převede na:
 
-    $ PrettyPrint.exe input.json output.json
-    $ PrettyPrint.exe input.xml output.xml
+```json
+{
+    "tag": "foo",
+    "attributes": {},
+    "pair": true,
+    "content": [
+        "\n\tText before\n\t",
+        {
+            "tag": "bar",
+            "attributes": {
+                "baz": "asd"
+            },
+            "pair": true,
+            "content": []
+        },
+        "\n\tText after\n"
+    ]
+}
+```
+
+
+### Lemon
+
+Lemon je framework na psaní parserů pomocí skládání jednodušších parserů do sebe přímo v C#.
+
+- [Používání knihovny](docs/usage.md)
+- [Parser](docs/parser.md)
+- [ParserFactory, Rekurze](docs/parser-factory.md)
+- [Chyby při parsování - ParsingException](docs/exceptions.md)
+
+
+### Závěr
+
+Původně jsem chtěl vymyslet knihovně nějaké pěkné API, aby se dala hezky používat i ve staticky
+typovaném jazyce jako je C#. Veškeré znalosti které jsem s podobnými věcmi měl jsou z dynamických jazyků.
+Výsledkem je moře generických tříd a typových argumentů, ve kterém se člověk ztrácí. Navíc spousta
+chyb se stejně odchytí až za běhu, protože je všechno tak modulární a neurčité, že se musí všude přetypovávat.
+
+Takže možná parsování (alespoň takovéhle) opravu sedí lépe na dynamické jazyky. Nebo jsem to spíš napsal
+dynmicky ve statickém jazyku. Nevím.
+
+Další problém, na který jsem narazil ke konci programování je, jak přesně šířit výjimky o neúspěšném parsování.
+Jakmile totiž někde požijeme alternaci, začne být problém určovat, kdo je viník. A když použijeme opakování
+parseru, tak ten začne házet vinu na sousední parsery a tedy data ve výjimce jsou skoro zavádějící.
+
+Problém jsem ale jen trochu zalepil a dál neřešil. Nebyl to cíl práce a neměl jsem to ani nijak
+konkrétně rozmyšlené dopředu.
